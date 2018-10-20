@@ -100,3 +100,8 @@ df_poblacion_pob_registro <- archivos_pob %>%
          pob_registro_no_especificado = x10) %>% 
   # Excluir renglones con notas metodológicas
   filter(!str_detect(edo, "Nota:|\\*")) 
+
+
+### Importar archivo con datos de municipios que participaran en la consulta del NAICM ----
+mpos_consulta <- 
+  read_excel("01_datos/mpos_consulta_nacim.xlsx")
