@@ -7,8 +7,6 @@ p_load(animation, cowplot, curl, extrafont, forcats, gganimate, ggforce,
        stringi, stringr, stringdist, tweenr, tidyr, tidygraph,
        tidyverse, treemapify, zoo)
 
-
-
 ### Setup general ----
 Sys.setlocale("LC_ALL", "es_ES.UTF-8") 
 options(scipen = 9999)
@@ -27,3 +25,28 @@ tema <-  theme_minimal() +
         legend.title.align = 0.5,
         axis.title = element_text(size = 18, hjust = 1, face = "bold", margin = margin(0,0,0,0), family="Didact Gothic Regular"),
         axis.text = element_text(size = 16, face = "bold", family="Didact Gothic Regular"))
+
+### Descarga archivos de la Encuesta intercensal 2015 del INEGI con información del total de la población municipal ----
+
+# Definir sufijos con acronimos de entidades
+edos <- c("ags", "bc", "bcs", "cam",
+          "coah", "col", "chis", "chih",
+          "cdmx", "dgo", "gto", "gro",
+          "hgo", "jal", "mex", "mich",
+          "mor", "nay", "nl", "oax",
+          "pue", "qro", "qroo", "slp",
+          "sin", "son", "tab", "tamps", 
+          "tlax", "ver", "yuc", "zac")
+
+# Definir comienzo del nombre de las variables a descargar 
+variables <- c("01_poblacion_")
+
+# Descargar datos al folder 01_datos/inegi/encuesta_intercensal_2015/ 
+for (i in seq_along(edos)) {
+  for (j in seq_along(variables)) {
+    curl_download(paste("http://www.beta.inegi.org.mx/contenidos/Proyectos/enchogares/especiales/intercensal/2015/tabulados/", variables[j], edos[i], ".xls", sep = ""), destfile = paste("01_datos/inegi/encuesta_intercensal_2015/", variables[j], edos[i], ".xls", sep = ""))
+    
+  }
+}
+
+
