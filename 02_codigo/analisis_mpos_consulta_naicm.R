@@ -50,3 +50,53 @@ for (i in seq_along(edos)) {
 }
 
 
+### Importar archivos descargados previamente ----
+
+# Dado que la estructura de los archivos varía dependiendo de la variable (p. ej., población, migración, etc.) y no existe información municipal para todas las variables, tengo que adecuar el código para el chunk de archivos a importar de cada variable
+
+### Población ----
+archivos_pob <- list.files(path = "01_datos/inegi/encuesta_intercensal_2015/", pattern = "01_poblacion")
+
+# df_poblacion_pob ----
+# Estimadores de la población total en viviendas particulares habitadas por municipio y grupos quinquenales de edad según sexo
+df_poblacion_pob <- archivos_pob %>% 
+  map(function(x) {
+    read_excel(paste0("01_datos/inegi/encuesta_intercensal_2015/", x), sheet = "02", skip = 7, col_names = F) %>% 
+      clean_names() # "Limpiar" nombres de variables
+  }) %>% 
+  # Unir todos los data frames en uno solo
+  reduce(rbind) %>% 
+  # Renombrar variables
+  rename(edo = x1, 
+         mpo = x2, 
+         gpo_edad = x3,
+         estimador = x4, 
+         pob_tot = x5, 
+         pob_hombres = x6,
+         pob_mujeres = x7) %>%   
+  # Excluir renglones con notas metodológicas
+  filter(!str_detect(edo, "Nota:|\\*")) 
+
+# df_poblacion_pob_registro ----
+# Estimadores de la población total y su distribución porcentual según condición de registro de nacimiento por municipio y sexo
+
+df_poblacion_pob_registro <- archivos_pob %>% 
+  map(function(x) {
+    read_excel(paste0("01_datos/inegi/encuesta_intercensal_2015/", x), sheet = "03", skip = 8, col_names = F) %>% 
+      clean_names() # "Limpiar" nombres de variables
+  }) %>% 
+  # Unir todos los data frames en uno solo
+  reduce(rbind) %>% 
+  # Renombrar variables
+  rename(edo = x1, 
+         mpo = x2, 
+         sexo = x3,
+         estimador = x4, 
+         pob_tot = x5, 
+         pob_tot_por = x6,
+         pob_registrada_por = x7,
+         pob_no_registrada_por = x8,
+         pob_registrada_otro_pais_por = x9,
+         pob_registro_no_especificado = x10) %>% 
+  # Excluir renglones con notas metodológicas
+  filter(!str_detect(edo, "Nota:|\\*")) 
