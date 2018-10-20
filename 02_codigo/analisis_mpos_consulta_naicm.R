@@ -206,7 +206,7 @@ bd %>%
        x = "\nPoblación total", 
        y = NULL,
        color = "¿Habrá consulta en el municipio?",
-       caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: mexicodecide.com.mx e INEGI") +
+       caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: mexicodecide.com.mx y Encuesta Intercensal 2015 del INEGI") +
   tema +
   theme(legend.position = c(0.2, -0.08),
         legend.direction = "horizontal",
