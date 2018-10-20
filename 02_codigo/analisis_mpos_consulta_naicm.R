@@ -109,12 +109,38 @@ mpos_consulta <-
 ### Limpiar bases de datos para a unión ----
 
 # Generar df que sólo incluye la estimación de población total municipal por estado ----
-
 df_pob <- 
   df_poblacion_pob %>% 
   filter(estimador == "Valor", 
          mpo != "Total",
          gpo_edad == "Total")
+
+# Generar y guardar nuevas variables dentro df_pob ---- 
+df_pob <- 
+  df_pob %>% 
+  mutate(edo_nom = str_replace(edo, "([0-9][0-9] )", ""), # Generar columna que contenga nombre de edo sin clave estatal
+         edo_nom = str_trim(edo_nom), # Quitar potenciales espacios en blanco al principio/final del nombre de cada estado
+         edo_nom = str_squish(edo_nom), # Quitar potenciales espacios en blanco en medio del nombre de cada estado
+         edo_nom = ifelse(str_detect(edo_nom, "Veracruz"), "Veracruz", ifelse(str_detect(edo_nom, "Coahuila"), "Coahuila", ifelse(str_detect(edo_nom, "Michoacán"), "Michoacán", edo_nom))), # Remplazar nombres oficiales por nombres civilizados de tres entidades 
+         edo_min = str_to_lower(edo_nom), # Generar versión en minúsculas del nombre de cada estado
+         edo_min = str_replace(edo_min, "á", "a"), # Quitar acentos 
+         edo_min = str_replace(edo_min, "é", "e"),
+         edo_min = str_replace(edo_min, "í", "i"),
+         edo_min = str_replace(edo_min, "ó", "o"),
+         edo_min = str_replace(edo_min, "ú", "u"),
+         mpo_nom = str_replace(mpo, "([0-9][0-9][0-9] )", ""), # Generar columna que contenga nombre de mpo sin clave municipal
+         mpo_nom = str_replace(mpo_nom, "\\*", ""), # Remover asteriscos
+         mpo_nom = str_replace(mpo_nom, " \\*", ""), # Remover asteriscos
+         mpo_nom = str_trim(mpo_nom), # Quitar potenciales espacios en blanco al principio/final del nombre de cada municipio
+         mpo_nom = str_squish(mpo_nom), # Quitar potenciales espacios en blanco en medio del nombre de cada municipio
+         mpo_min = str_to_lower(mpo_nom), # Generar versión en minúsculas del nombre de cada estado
+         mpo_min = str_replace(mpo_min, "á", "a"), # Quitar acentos 
+         mpo_min = str_replace(mpo_min, "é", "e"),
+         mpo_min = str_replace(mpo_min, "í", "i"),
+         mpo_min = str_replace(mpo_min, "ó", "o"),
+         mpo_min = str_replace(mpo_min, "ú", "u"),
+         cve_edo = str_replace(edo, " .*", ""), # Generar variable con clave estatal
+         cve_mpo = str_replace(mpo, " .*", ""))  # Generar variable con clave municipal
 
 # Homogeneizar nombres incluidos en la lista de mpos. con nombre de mpos. del INEGI ----
 mpos_consulta <- 
