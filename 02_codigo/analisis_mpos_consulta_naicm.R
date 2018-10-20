@@ -184,4 +184,9 @@ mpos_consulta <-
          municipios = str_replace(municipios, "é", "e"),
          municipios = str_replace(municipios, "í", "i"),
          municipios = str_replace(municipios, "ó", "o"),
-         municipios = str_replace(municipios, "ú", "u"),)
+         municipios = str_replace(municipios, "ú", "u"))
+
+### Unir bases de datos y generar data frame bd ----
+bd <- df_pob %>% 
+  full_join(mpos_consulta, by = c("edo_min" = "estados", "mpo_min" = "municipios"))  
+
