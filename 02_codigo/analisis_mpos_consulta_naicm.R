@@ -7,8 +7,6 @@ p_load(animation, cowplot, curl, extrafont, forcats, gganimate, ggforce,
        stringi, stringr, stringdist, tweenr, tidyr, tidygraph,
        tidyverse, treemapify, zoo)
 
-
-
 ### Setup general ----
 Sys.setlocale("LC_ALL", "es_ES.UTF-8") 
 options(scipen = 9999)
@@ -27,3 +25,78 @@ tema <-  theme_minimal() +
         legend.title.align = 0.5,
         axis.title = element_text(size = 18, hjust = 1, face = "bold", margin = margin(0,0,0,0), family="Didact Gothic Regular"),
         axis.text = element_text(size = 16, face = "bold", family="Didact Gothic Regular"))
+
+### Descarga archivos de la Encuesta intercensal 2015 del INEGI con información del total de la población municipal ----
+
+# Definir sufijos con acronimos de entidades
+edos <- c("ags", "bc", "bcs", "cam",
+          "coah", "col", "chis", "chih",
+          "cdmx", "dgo", "gto", "gro",
+          "hgo", "jal", "mex", "mich",
+          "mor", "nay", "nl", "oax",
+          "pue", "qro", "qroo", "slp",
+          "sin", "son", "tab", "tamps", 
+          "tlax", "ver", "yuc", "zac")
+
+# Definir comienzo del nombre de las variables a descargar 
+variables <- c("01_poblacion_")
+
+# Descargar datos al folder 01_datos/inegi/encuesta_intercensal_2015/ 
+for (i in seq_along(edos)) {
+  for (j in seq_along(variables)) {
+    curl_download(paste("http://www.beta.inegi.org.mx/contenidos/Proyectos/enchogares/especiales/intercensal/2015/tabulados/", variables[j], edos[i], ".xls", sep = ""), destfile = paste("01_datos/inegi/encuesta_intercensal_2015/", variables[j], edos[i], ".xls", sep = ""))
+    
+  }
+}
+
+
+### Importar archivos descargados previamente ----
+
+# Dado que la estructura de los archivos varía dependiendo de la variable (p. ej., población, migración, etc.) y no existe información municipal para todas las variables, tengo que adecuar el código para el chunk de archivos a importar de cada variable
+
+### Población ----
+archivos_pob <- list.files(path = "01_datos/inegi/encuesta_intercensal_2015/", pattern = "01_poblacion")
+
+# df_poblacion_pob ----
+# Estimadores de la población total en viviendas particulares habitadas por municipio y grupos quinquenales de edad según sexo
+df_poblacion_pob <- archivos_pob %>% 
+  map(function(x) {
+    read_excel(paste0("01_datos/inegi/encuesta_intercensal_2015/", x), sheet = "02", skip = 7, col_names = F) %>% 
+      clean_names() # "Limpiar" nombres de variables
+  }) %>% 
+  # Unir todos los data frames en uno solo
+  reduce(rbind) %>% 
+  # Renombrar variables
+  rename(edo = x1, 
+         mpo = x2, 
+         gpo_edad = x3,
+         estimador = x4, 
+         pob_tot = x5, 
+         pob_hombres = x6,
+         pob_mujeres = x7) %>%   
+  # Excluir renglones con notas metodológicas
+  filter(!str_detect(edo, "Nota:|\\*")) 
+
+# df_poblacion_pob_registro ----
+# Estimadores de la población total y su distribución porcentual según condición de registro de nacimiento por municipio y sexo
+
+df_poblacion_pob_registro <- archivos_pob %>% 
+  map(function(x) {
+    read_excel(paste0("01_datos/inegi/encuesta_intercensal_2015/", x), sheet = "03", skip = 8, col_names = F) %>% 
+      clean_names() # "Limpiar" nombres de variables
+  }) %>% 
+  # Unir todos los data frames en uno solo
+  reduce(rbind) %>% 
+  # Renombrar variables
+  rename(edo = x1, 
+         mpo = x2, 
+         sexo = x3,
+         estimador = x4, 
+         pob_tot = x5, 
+         pob_tot_por = x6,
+         pob_registrada_por = x7,
+         pob_no_registrada_por = x8,
+         pob_registrada_otro_pais_por = x9,
+         pob_registro_no_especificado = x10) %>% 
+  # Excluir renglones con notas metodológicas
+  filter(!str_detect(edo, "Nota:|\\*")) 
