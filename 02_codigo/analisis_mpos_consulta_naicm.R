@@ -120,5 +120,14 @@ mpos_consulta <-
                                 municipios == "MEDELLÍN" ~ "MEDELLÍN DE BRAVO", 
                                 municipios == "NANCHITAL DE LAZARO CARDENAS DEL RÍO" ~ "NANCHITAL DE LÁZARO CÁRDENAS DEL RÍO", 
                                 TRUE ~ municipios))
+
+
+### Generar copias de las columnas estados y municipios ----
+
+# Estás columnas son las que conservaré después de unir las bases de datos
+mpos_consulta <- 
+  mpos_consulta %>% 
+  mutate(estados_nom = estados,
+         municipios_nom = municipios)
          
 
