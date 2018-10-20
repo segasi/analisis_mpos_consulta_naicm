@@ -106,7 +106,9 @@ df_poblacion_pob_registro <- archivos_pob %>%
 mpos_consulta <- 
   read_excel("01_datos/mpos_consulta_nacim.xlsx")
 
-### Homogeneizar nombres incluidos en la lista de mpos. con nombre de mpos. del INEGI
+### Limpiar bases de datos para a unión ----
+
+# Homogeneizar nombres incluidos en la lista de mpos. con nombre de mpos. del INEGI ----
 mpos_consulta <- 
   mpos_consulta %>% 
   mutate(municipios = case_when(municipios == "SILAO" ~ "SILAO DE LA VICTORIA",
@@ -122,7 +124,7 @@ mpos_consulta <-
                                 TRUE ~ municipios))
 
 
-### Generar copias de las columnas estados y municipios ----
+# Generar copias de las columnas estados y municipios ----
 
 # Estás columnas son las que conservaré después de unir las bases de datos
 mpos_consulta <- 
