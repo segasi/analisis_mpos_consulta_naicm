@@ -108,6 +108,14 @@ mpos_consulta <-
 
 ### Limpiar bases de datos para a unión ----
 
+# Generar df que sólo incluye la estimación de población total municipal por estado ----
+
+df_pob <- 
+  df_poblacion_pob %>% 
+  filter(estimador == "Valor", 
+         mpo != "Total",
+         gpo_edad == "Total")
+
 # Homogeneizar nombres incluidos en la lista de mpos. con nombre de mpos. del INEGI ----
 mpos_consulta <- 
   mpos_consulta %>% 
