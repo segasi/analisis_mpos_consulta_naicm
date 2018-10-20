@@ -159,7 +159,6 @@ mpos_consulta <-
 
 
 # Generar copias de las columnas estados y municipios ----
-
 # Estás columnas son las que conservaré después de unir las bases de datos
 mpos_consulta <- 
   mpos_consulta %>% 
@@ -167,3 +166,22 @@ mpos_consulta <-
          municipios_nom = municipios)
          
 
+# Generar y guardar nuevas variables dentro mpos_consulta ----
+mpos_consulta <- 
+  mpos_consulta %>% 
+  mutate(estados = str_to_lower(estados), # Generar versión en minúsculas del nombre de cada estado
+         estados = str_trim(estados), # Quitar potenciales espacios en blanco al principio/final del nombre de cada estado
+         estados = str_squish(estados), # Quitar potenciales espacios en blanco en medio del nombre de cada estado
+         estados = str_replace(estados, "á", "a"), # Quitar acentos
+         estados = str_replace(estados, "é", "e"),
+         estados = str_replace(estados, "í", "i"),
+         estados = str_replace(estados, "ó", "o"),
+         estados = str_replace(estados, "ú", "u"),
+         municipios = str_to_lower(municipios), # Generar versión en minúsculas del nombre de cada municipio
+         municipios = str_trim(municipios), # Quitar potenciales espacios en blanco al principio/final del nombre de cada municipio
+         municipios = str_squish(municipios), # Quitar potenciales espacios en blanco en medio del nombre de cada municipio
+         municipios = str_replace(municipios, "á", "a"), # Quitar acentos
+         municipios = str_replace(municipios, "é", "e"),
+         municipios = str_replace(municipios, "í", "i"),
+         municipios = str_replace(municipios, "ó", "o"),
+         municipios = str_replace(municipios, "ú", "u"),)
