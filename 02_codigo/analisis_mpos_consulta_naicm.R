@@ -50,9 +50,9 @@ for (i in seq_along(edos)) {
 }
 
 
-### Importar archivos descargados previamente ----
+### Importar archivos de la Encuesta intercensal 2015 descargados previamente ----
 
-# Dado que la estructura de los archivos varía dependiendo de la variable (p. ej., población, migración, etc.) y no existe información municipal para todas las variables, tengo que adecuar el código para el chunk de archivos a importar de cada variable
+# Dado que la estructura de los archivos varía dependiendo de la variable y no existe información municipal para todas las variables, tengo que adecuar el código para el chunk de archivos a importar de cada variable
 
 ### Población ----
 archivos_pob <- list.files(path = "01_datos/inegi/encuesta_intercensal_2015/", pattern = "01_poblacion")
