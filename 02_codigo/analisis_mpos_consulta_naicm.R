@@ -190,3 +190,26 @@ mpos_consulta <-
 bd <- df_pob %>% 
   full_join(mpos_consulta, by = c("edo_min" = "estados", "mpo_min" = "municipios"))  
 
+
+### Gráficas
+
+# Gráfica de municipios de cada estado incluidos y no incluidos en la consulta y su tamañao poblacional ----
+bd %>% 
+  mutate(mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
+  ggplot(aes(x = pob_tot, 
+             y = fct_rev(edo_nom), 
+             color = mpo_incluido)) +
+  geom_jitter(height = 0.2, alpha = 0.3) +
+  scale_x_continuous(labels = comma, breaks = seq(0, 2000000, 250000), expand = c(0, 0), limits = c(0, 2100000)) +
+  scale_color_manual(values = c("salmon", "steelblue")) +
+  labs(title = str_wrap("RELACIÓN ENTRE LOS MUNICIPIOS EN LOS QUE HABRÁ CONSULTA Y SU TAMAÑO POBLACIONAL", width = 70), 
+       x = "\nPoblación total", 
+       y = NULL,
+       color = "¿Habrá consulta en el municipio?",
+       caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: mexicodecide.com.mx e INEGI") +
+  tema +
+  theme(legend.position = c(0.2, -0.08),
+        legend.direction = "horizontal",
+        legend.text = element_text(size = 16))
+
+ggsave(filename = "mpos_por_edo_incluidos_y_no.png", path = "03_graficas/", width = 15, height = 10, dpi = 100)
