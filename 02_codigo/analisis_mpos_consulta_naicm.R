@@ -105,3 +105,20 @@ df_poblacion_pob_registro <- archivos_pob %>%
 ### Importar archivo con datos de municipios que participaran en la consulta del NAICM ----
 mpos_consulta <- 
   read_excel("01_datos/mpos_consulta_nacim.xlsx")
+
+### Homogeneizar nombres incluidos en la lista de mpos. con nombre de mpos. del INEGI
+mpos_consulta <- 
+  mpos_consulta %>% 
+  mutate(municipios = case_when(municipios == "SILAO" ~ "SILAO DE LA VICTORIA",
+                                municipios == "TLAQUEPAQUE" ~ "SAN PEDRO TLAQUEPAQUE",
+                                municipios == "ACAMBAY" ~ "ACAMBAY DE RUÍZ CASTAÑEDA",
+                                municipios == "LAZARO CÁRDENAS" ~ "LÁZARO CÁRDENAS",
+                                municipios == "TLALTIZAPÁN" ~ "TLALTIZAPÁN DE ZAPATA",
+                                municipios == "GRAL. ESCOBEDO" ~ "GENERAL ESCOBEDO",
+                                municipios == "SAN PEDRO MIXTEPEC -DTO. 22 -" ~ "SAN PEDRO MIXTEPEC",
+                                municipios == "ALTO LUCERO DE GUTIÉRREZ BARRIO" ~ "ALTO LUCERO DE GUTIÉRREZ BARRIOS",
+                                municipios == "MEDELLÍN" ~ "MEDELLÍN DE BRAVO", 
+                                municipios == "NANCHITAL DE LAZARO CARDENAS DEL RÍO" ~ "NANCHITAL DE LÁZARO CÁRDENAS DEL RÍO", 
+                                TRUE ~ municipios))
+         
+
