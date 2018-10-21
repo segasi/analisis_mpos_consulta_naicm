@@ -199,10 +199,10 @@ bd %>%
   ggplot(aes(x = pob_tot, 
              y = fct_rev(edo_nom), 
              color = mpo_incluido)) +
-  geom_jitter(height = 0.2, alpha = 0.3) +
+  geom_jitter(height = 0.2, alpha = 0.5) +
   scale_x_continuous(labels = comma, breaks = seq(0, 2000000, 250000), expand = c(0, 0), limits = c(0, 2100000)) +
   scale_color_manual(values = c("salmon", "steelblue")) +
-  labs(title = str_wrap("RELACIÓN ENTRE LOS MUNICIPIOS EN LOS QUE HABRÁ CONSULTA Y SU TAMAÑO POBLACIONAL", width = 70), 
+  labs(title = str_wrap("RELACIÓN ENTRE LOS MUNICIPIOS EN LOS QUE SE INSTALARÁ (O NO) UNA MESA DE VOTACIÓN EN LA CONSULTA Y SU TAMAÑO POBLACIONAL", width = 70), 
        x = "\nPoblación total", 
        y = NULL,
        color = "¿Habrá consulta en el municipio?",
@@ -213,3 +213,30 @@ bd %>%
         legend.text = element_text(size = 16))
 
 ggsave(filename = "mpos_por_edo_incluidos_y_no.png", path = "03_graficas/", width = 15, height = 10, dpi = 100)
+
+
+
+# Gráfica del porcentaje de municipios de cada entidad en los que se instalará una mesa de votación ----
+
+bd %>% 
+  mutate(mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
+  group_by(edo_nom) %>% 
+  summarise(num_mpos = n(),
+            total_mpos_incluidos = sum(mpo_incluido == "Sí")) %>% 
+  ungroup() %>% 
+  mutate(por_mpos_incluidos = round((total_mpos_incluidos/num_mpos)*100, 1)) %>% 
+  arrange(-por_mpos_incluidos) %>% 
+  ggplot(aes(fct_reorder(edo_nom, por_mpos_incluidos), por_mpos_incluidos)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  scale_y_continuous(breaks = seq(0, 100, 10), expand = c(0, 0), limits = c(0, 103)) +
+  labs(title = str_wrap("PORCENTAJE DE MUNICIPIOS DE CADA ENTIDAD EN LOS QUE SE INSTALARÁ UNA MESA DE VOTACIÓN DURANTE LA CONSULTA", width = 70), 
+       x = NULL, 
+       y = "\n% de municipios",
+       caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: mexicodecide.com.mx y Encuesta Intercensal 2015 del INEGI") +
+  tema +
+  theme(panel.grid.major.y = element_blank())
+
+ggsave(filename = "por_mpos_incluidos_por_edo_consulta.png", path = "03_graficas/", width = 15, height = 10, dpi = 100)
+
+
