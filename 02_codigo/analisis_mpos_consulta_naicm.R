@@ -296,15 +296,14 @@ bd %>%
          pob_tot_nal = sum(pob_tot),
          por_pob_acumulada = round((pob_acumulada/pob_tot_nal)*100, 5),
          mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
-  select(edo_nom, mpo_nom, 
-         pob_tot, 
-         pob_acumulada, 
-         pob_tot_nal, 
-         por_pob_acumulada, 
-         mpo_incluido) %>% 
   filter(por_pob_acumulada <=80,
          mpo_incluido == "No") %>% 
-  print(n = Inf)
+  select(edo_nom, mpo_nom, 
+         pob_tot, 
+         mpo_incluido) %>% 
+  print(n = Inf) %>% 
+  write_excel_csv("04_datos_output/mpos_del_80_porciento_mas_poblado_no_incluidos.csv")
+
 
 
 ### Gráfica de la distribución por estado de los municpios que a pesar de formar parte del subuniverso que conecentra el 80% de la población nacional, no se instalará una casilla de votación en la consulta ----
