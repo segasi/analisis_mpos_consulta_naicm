@@ -305,3 +305,40 @@ bd %>%
   filter(por_pob_acumulada <=80,
          mpo_incluido == "No") %>% 
   print(n = Inf)
+
+
+### Gráfica de la distribución por estado de los municpios que a pesar de formar parte del subuniverso que conecentra el 80% de la población nacional, no se instalará una casilla de votación en la consulta ----
+bd %>% 
+  arrange(-pob_tot) %>% 
+  mutate(pob_acumulada = cumsum(pob_tot),
+         pob_tot_nal = sum(pob_tot),
+         por_pob_acumulada = round((pob_acumulada/pob_tot_nal)*100, 5),
+         mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
+  select(edo_nom, mpo_nom, 
+         pob_tot, 
+         pob_acumulada, 
+         pob_tot_nal, 
+         por_pob_acumulada, 
+         mpo_incluido) %>% 
+  filter(por_pob_acumulada <=80,
+         mpo_incluido == "No") %>% 
+  group_by(edo_nom) %>%
+  summarise(num_mpos = n()) %>% 
+  ungroup() %>% 
+  arrange(-num_mpos) %>% 
+  mutate(por_mpos_cum = round((cumsum(num_mpos)/sum(num_mpos))*100, 1)) %>% 
+  ggplot(aes(fct_reorder(edo_nom, num_mpos), num_mpos)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  scale_y_continuous(breaks = c(seq(0, 10, 5), 13), expand = c(0, 0), limits = c(0, 14)) +
+  labs(title = str_wrap("DISTRIBUCIÓN DEL SUBUNIVERSO DE 108 MUNICIPIOS EN LOS QUE NO SE INSTALARÁ UNA MESA DE VOTACIÓN DURANTE LA CONSULTA, A PESAR DE SÍ SER DE LOS 502 MÁS POBLADOS", width = 68), 
+       subtitle = str_wrap("Estos 108 municipios forman parte del subuniverso de los 502 más poblados y que conjuntamente conecentra el 80% de la población nacional", width = 120), 
+       x = NULL, 
+       y = "\nNúm. de   \nmunicipios",
+       caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: mexicodecide.com.mx y Encuesta Intercensal 2015 del INEGI") +
+  tema +
+  theme(panel.grid.major.y = element_blank())
+
+ggsave(filename = "mpos_del_80_porciento_mas_poblado_no_incluidos.png", path = "03_graficas/", width = 15, height = 10, dpi = 100)
+
+
