@@ -286,3 +286,22 @@ bd %>%
   write_excel_csv("04_datos_output/mpos_80_porciento_poblacion.csv")
 
 
+
+
+### Municipios que forman parte del subuniverso que conecentra el 80% de la población nacional pero en los que no se instalará una casilla de votación en la consulta ----
+
+bd %>% 
+  arrange(-pob_tot) %>% 
+  mutate(pob_acumulada = cumsum(pob_tot),
+         pob_tot_nal = sum(pob_tot),
+         por_pob_acumulada = round((pob_acumulada/pob_tot_nal)*100, 5),
+         mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
+  select(edo_nom, mpo_nom, 
+         pob_tot, 
+         pob_acumulada, 
+         pob_tot_nal, 
+         por_pob_acumulada, 
+         mpo_incluido) %>% 
+  filter(por_pob_acumulada <=80,
+         mpo_incluido == "No") %>% 
+  print(n = Inf)
