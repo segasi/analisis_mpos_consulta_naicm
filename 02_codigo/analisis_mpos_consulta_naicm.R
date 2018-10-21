@@ -402,6 +402,22 @@ bd %>%
 ggsave(filename = "mpos_incluidos_que_no_son_del_80_porciento_mas_poblado.png", path = "03_graficas/", width = 15, height = 10, dpi = 100)
 
 
+### Municipios en lo que a pesar de NO formar parte del subuniverso que conecentra el 80% de la población nacional, SÍ se instalará una casilla de votación en la consulta ----
+
+bd %>% 
+  arrange(-pob_tot) %>% 
+  mutate(pob_acumulada = cumsum(pob_tot),
+         pob_tot_nal = sum(pob_tot),
+         por_pob_acumulada = round((pob_acumulada/pob_tot_nal)*100, 5),
+         mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
+  filter(por_pob_acumulada >=80,
+         mpo_incluido == "Sí") %>% 
+  select(edo_nom, mpo_nom, 
+         pob_tot, 
+         mpo_incluido) %>% 
+  print(n = Inf) %>% 
+  write_excel_csv("04_datos_output/mpos_incluidos_que_no_son_del_80_porciento_mas_poblado.csv")
+
 
 ### Análisis de la distribución por estado de los municpios que a pesar de formar parte del subuniverso que conecentra el 80% de la población nacional, no se instalará una casilla de votación en la consulta ----
 
