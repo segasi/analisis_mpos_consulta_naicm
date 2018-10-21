@@ -191,9 +191,7 @@ bd <- df_pob %>%
   full_join(mpos_consulta, by = c("edo_min" = "estados", "mpo_min" = "municipios"))  
 
 
-### Gráficas
-
-# Gráfica de municipios de cada estado incluidos y no incluidos en la consulta y su tamañao poblacional ----
+### Gráfica de municipios de cada estado incluidos y no incluidos en la consulta y su tamañao poblacional ----
 bd %>% 
   mutate(mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
   ggplot(aes(x = pob_tot, 
@@ -216,7 +214,7 @@ ggsave(filename = "mpos_por_edo_incluidos_y_no.png", path = "03_graficas/", widt
 
 
 
-# Gráfica del porcentaje de municipios de cada entidad en los que se instalará una mesa de votación ----
+### Gráfica del porcentaje de municipios de cada entidad en los que se instalará una mesa de votación ----
 
 bd %>% 
   mutate(mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
@@ -241,7 +239,7 @@ ggsave(filename = "por_mpos_incluidos_por_edo_consulta.png", path = "03_graficas
 
 
 
-# Gráfica del porcentaje de población que habita en los municipios en los que se instalará una mesa de votación ----
+### Gráfica del porcentaje de población que habita en los municipios en los que se instalará una mesa de votación ----
 
 bd %>% 
   mutate(mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
@@ -267,4 +265,24 @@ bd %>%
   theme(panel.grid.major.y = element_blank())
 
 ggsave(filename = "por_poblacion_en_mpos_incluidos_por_edo_consulta.png", path = "03_graficas/", width = 15, height = 10, dpi = 100)
+
+
+
+### Identificar los municpios que conecentran el 80% de la población nacional y generar archivo .csv ----
+bd %>% 
+  arrange(-pob_tot) %>% 
+  mutate(pob_acumulada = cumsum(pob_tot),
+         pob_tot_nal = sum(pob_tot),
+         por_pob_acumulada = round((pob_acumulada/pob_tot_nal)*100, 5),
+         mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
+  select(edo_nom, mpo_nom, 
+         pob_tot, 
+         pob_acumulada, 
+         pob_tot_nal, 
+         por_pob_acumulada, 
+         mpo_incluido) %>% 
+  filter(por_pob_acumulada <=80) %>% 
+  print(n = Inf) %>% 
+  write_excel_csv("04_datos_output/mpos_80_porciento_poblacion.csv")
+
 
