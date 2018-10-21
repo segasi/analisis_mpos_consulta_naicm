@@ -240,3 +240,31 @@ bd %>%
 ggsave(filename = "por_mpos_incluidos_por_edo_consulta.png", path = "03_graficas/", width = 15, height = 10, dpi = 100)
 
 
+
+# Gráfica del porcentaje de población que habita en los municipios en los que se instalará una mesa de votación ----
+
+bd %>% 
+  mutate(mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
+  group_by(edo_nom) %>% 
+  mutate(pob_incluidos = ifelse(mpo_incluido == "Sí", pob_tot, 0)) %>% 
+  summarise(num_mpos = n(),
+            total_mpos_incluidos = sum(mpo_incluido == "Sí"),
+            total_pob_edo = sum(pob_tot),
+            total_pob_mpos_incluidos = sum(pob_incluidos)) %>% 
+  ungroup() %>% 
+  mutate(por_mpos_incluidos = round((total_mpos_incluidos/num_mpos)*100, 1),
+         por_pob_incluida = round((total_pob_mpos_incluidos/total_pob_edo)*100, 1)) %>% 
+  arrange(-por_pob_incluida) %>% 
+  ggplot(aes(fct_reorder(edo_nom, por_pob_incluida), por_pob_incluida)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  scale_y_continuous(breaks = seq(0, 100, 10), expand = c(0, 0), limits = c(0, 103)) +
+  labs(title = str_wrap("PORCENTAJE DE LA POBLACIÓN DE CADA ENTIDAD QUE HABITA EN LOS MUNICIPIOS EN LOS QUE SE INSTALARÁ UNA MESA DE VOTACIÓN DURANTE LA CONSULTA", width = 70), 
+       x = NULL, 
+       y = "\n% de población",
+       caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: mexicodecide.com.mx y Encuesta Intercensal 2015 del INEGI") +
+  tema +
+  theme(panel.grid.major.y = element_blank())
+
+ggsave(filename = "por_poblacion_en_mpos_incluidos_por_edo_consulta.png", path = "03_graficas/", width = 15, height = 10, dpi = 100)
+
