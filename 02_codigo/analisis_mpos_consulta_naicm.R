@@ -414,7 +414,8 @@ bd %>%
          mpo_incluido == "Sí") %>% 
   select(edo_nom, mpo_nom, 
          pob_tot, 
-         mpo_incluido) %>% 
+         mpo_incluido) %>%
+  mutate(pob_subuniverso_mpos = sum(pob_tot)) %>% 
   print(n = Inf) %>% 
   write_excel_csv("04_datos_output/mpos_incluidos_que_no_son_del_80_porciento_mas_poblado.csv")
 
