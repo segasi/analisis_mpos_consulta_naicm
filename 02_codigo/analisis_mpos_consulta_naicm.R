@@ -518,7 +518,8 @@ bd_comparacion %>%
   scale_y_continuous(breaks = seq(0, 100, 10)) +
   labs(title = str_wrap("RELACIÓN ENTRE EL PORCENTAJE DE MUNICIPIOS DE CADA ESTADO EN LOS QUE SE INSTALARÁ UNA MESA DE VOTACIÓN, Y EL PORCENTAJE QUE DEBERÍA HABERSE INCLUIDO CONSIDERANDO ÚNICAMENTE CRITERIOS POBLACIONALES", width = 70),
        x = "\nPorcentaje de municipios incluidos",
-       y = "Porcentaje de municipios\nque debieron incluirse\n")+
+       y = "Porcentaje de municipios\nque debieron incluirse\n",
+       caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: mexicodecide.com.mx y Encuesta Intercensal 2015 del INEGI") +
   tema
 
 ggsave(filename = "mpos_incluidos_vs_mpos_debieron_incluirse.png", path = "03_graficas/", width = 15, height = 10, dpi = 100)
