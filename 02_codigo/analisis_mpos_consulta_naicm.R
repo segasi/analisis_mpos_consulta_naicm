@@ -302,7 +302,7 @@ bd %>%
 
 
 
-### Municipios que forman parte del subuniverso que conecentra el 80% de la población nacional pero en los que no se instalará una casilla de votación en la consulta ----
+### Municipios que forman parte del subuniverso que conecentra el 80% de la población nacional pero en los que NO se instalará una casilla de votación en la consulta ----
 
 bd %>% 
   arrange(-pob_tot) %>% 
