@@ -315,6 +315,7 @@ bd %>%
   select(edo_nom, mpo_nom, 
          pob_tot, 
          mpo_incluido) %>% 
+  mutate(pob_subuniverso_mpos = sum(pob_tot)) %>%
   print(n = Inf) %>% 
   write_excel_csv("04_datos_output/mpos_del_80_porciento_mas_poblado_no_incluidos.csv")
 
@@ -405,8 +406,8 @@ bd %>%
   geom_col(fill = "steelblue") +
   coord_flip() +
   # scale_y_continuous(breaks = c(seq(0, 10, 5), 13), expand = c(0, 0), limits = c(0, 14)) +
-  labs(title = str_wrap("DISTRIBUCIÓN DEL SUBUNIVERSO DE 127 MUNICIPIOS EN LOS QUE SÍ SE INSTALARÁ UNA MESA DE VOTACIÓN DURANTE LA CONSULTA, A PESAR DE NO SER DE LOS 502 MÁS POBLADOS", width = 68), 
-       subtitle = str_wrap("Estos 127 municipios NO forman parte del subuniverso de los 502 más poblados y que conjuntamente conecentra el 80% de la población nacional", width = 120), 
+  labs(title = str_wrap("DISTRIBUCIÓN DEL SUBUNIVERSO DE 138 MUNICIPIOS EN LOS QUE SÍ SE INSTALARÁ UNA MESA DE VOTACIÓN DURANTE LA CONSULTA, A PESAR DE NO SER DE LOS 502 MÁS POBLADOS", width = 68), 
+       subtitle = str_wrap("Estos 138 municipios NO forman parte del subuniverso de los 502 más poblados y que conjuntamente conecentra el 80% de la población nacional", width = 120), 
        x = NULL, 
        y = "\nNúm. de   \nmunicipios",
        caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: mexicodecide.com.mx y Encuesta Intercensal 2015 del INEGI") +
