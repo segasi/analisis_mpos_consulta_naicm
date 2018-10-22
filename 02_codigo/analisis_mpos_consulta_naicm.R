@@ -1,7 +1,7 @@
 ### Paquetes ----
 library(pacman)
 devtools::install_github("tidyverse/readxl") # Descargar la versión en desarrollo de tidyverse. Esto es necesario porque para usar readxl, los archivos .xls de algunas entidades no pueden ser leídos con la versión que está en el CRAN
-p_load(animation, cowplot, curl, extrafont, forcats, gganimate, ggforce, 
+p_load(animation, curl, extrafont, forcats, gganimate, ggforce, 
        ggmap, ggraph, ggrepel, ggridges, janitor, lubridate, mapdata, 
        maps, maptools, purrr, readxl, rgdal, rgeos, scales, sp,
        stringi, stringr, stringdist, tweenr, tidyr, tidygraph,
@@ -115,6 +115,18 @@ df_pob <-
          mpo != "Total",
          gpo_edad == "Total")
 
+### Cambiar nombre uno de los dos San Pedro Mixtepec a San Pedro Mixtepec Distrito 26 en df_pob ----
+
+# En Oaxaca existen dos municipios que se llaman San Pedro Mixtepec, uno con terminación Distrito 22 y otro Distrito 26. Sin embargo, la base de datos del INEGI no los distingue por nombre. Dado que la consulta será en San Pedro Mixtepec Distrito 22, a continuación renombró la observación de San Pedro Mixtepec Distrito 26. 
+
+# Para distinguir cuál debía eliminar, consulté la ficha básica municipal de población de ambos municipios en http://www.snim.rami.gob.mx/. San Pedro Mixtepec Distrito 26 es el que tiene menor población.  
+
+df_pob <- 
+  df_pob %>%
+  mutate(mpo = ifelse(mpo == "319 San Pedro Mixtepec *", "319 San Pedro Mixtepec - Distrito 26", mpo)) 
+
+
+
 # Generar y guardar nuevas variables dentro df_pob ---- 
 df_pob <- 
   df_pob %>% 
@@ -142,6 +154,8 @@ df_pob <-
          cve_edo = str_replace(edo, " .*", ""), # Generar variable con clave estatal
          cve_mpo = str_replace(mpo, " .*", ""))  # Generar variable con clave municipal
 
+
+
 # Homogeneizar nombres incluidos en la lista de mpos. con nombre de mpos. del INEGI ----
 mpos_consulta <- 
   mpos_consulta %>% 
@@ -155,6 +169,7 @@ mpos_consulta <-
                                 municipios == "ALTO LUCERO DE GUTIÉRREZ BARRIO" ~ "ALTO LUCERO DE GUTIÉRREZ BARRIOS",
                                 municipios == "MEDELLÍN" ~ "MEDELLÍN DE BRAVO", 
                                 municipios == "NANCHITAL DE LAZARO CARDENAS DEL RÍO" ~ "NANCHITAL DE LÁZARO CÁRDENAS DEL RÍO", 
+                                municipios == "JUCHITAN DE ZARAGOZA" ~ "HEROICA CIUDAD DE JUCHITÁN DE ZARAGOZA", 
                                 TRUE ~ municipios))
 
 
@@ -189,7 +204,6 @@ mpos_consulta <-
 ### Unir bases de datos y generar data frame bd ----
 bd <- df_pob %>% 
   full_join(mpos_consulta, by = c("edo_min" = "estados", "mpo_min" = "municipios"))  
-
 
 ### Gráfica de municipios de cada estado incluidos y no incluidos en la consulta y su tamañao poblacional ----
 bd %>% 
@@ -330,8 +344,8 @@ bd %>%
   geom_col(fill = "steelblue") +
   coord_flip() +
   scale_y_continuous(breaks = c(seq(0, 10, 5), 13), expand = c(0, 0), limits = c(0, 14)) +
-  labs(title = str_wrap("DISTRIBUCIÓN DEL SUBUNIVERSO DE 108 MUNICIPIOS EN LOS QUE NO SE INSTALARÁ UNA MESA DE VOTACIÓN DURANTE LA CONSULTA, A PESAR DE SÍ SER DE LOS 502 MÁS POBLADOS", width = 68), 
-       subtitle = str_wrap("Estos 108 municipios forman parte del subuniverso de los 502 más poblados y que conjuntamente conecentra el 80% de la población nacional", width = 120), 
+  labs(title = str_wrap("DISTRIBUCIÓN DEL SUBUNIVERSO DE 102 MUNICIPIOS EN LOS QUE NO SE INSTALARÁ UNA MESA DE VOTACIÓN DURANTE LA CONSULTA, A PESAR DE SÍ SER DE LOS 502 MÁS POBLADOS", width = 68), 
+       subtitle = str_wrap("Estos 102 municipios forman parte del subuniverso de los 502 más poblados y que conjuntamente conecentra el 80% de la población nacional", width = 120), 
        x = NULL, 
        y = "\nNúm. de   \nmunicipios",
        caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: mexicodecide.com.mx y Encuesta Intercensal 2015 del INEGI") +
@@ -391,8 +405,8 @@ bd %>%
   geom_col(fill = "steelblue") +
   coord_flip() +
   # scale_y_continuous(breaks = c(seq(0, 10, 5), 13), expand = c(0, 0), limits = c(0, 14)) +
-  labs(title = str_wrap("DISTRIBUCIÓN DEL SUBUNIVERSO DE 133 MUNICIPIOS EN LOS QUE SÍ SE INSTALARÁ UNA MESA DE VOTACIÓN DURANTE LA CONSULTA, A PESAR DE NO SER DE LOS 502 MÁS POBLADOS", width = 68), 
-       subtitle = str_wrap("Estos 133 municipios NO forman parte del subuniverso de los 502 más poblados y que conjuntamente conecentra el 80% de la población nacional", width = 120), 
+  labs(title = str_wrap("DISTRIBUCIÓN DEL SUBUNIVERSO DE 127 MUNICIPIOS EN LOS QUE SÍ SE INSTALARÁ UNA MESA DE VOTACIÓN DURANTE LA CONSULTA, A PESAR DE NO SER DE LOS 502 MÁS POBLADOS", width = 68), 
+       subtitle = str_wrap("Estos 127 municipios NO forman parte del subuniverso de los 502 más poblados y que conjuntamente conecentra el 80% de la población nacional", width = 120), 
        x = NULL, 
        y = "\nNúm. de   \nmunicipios",
        caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: mexicodecide.com.mx y Encuesta Intercensal 2015 del INEGI") +
