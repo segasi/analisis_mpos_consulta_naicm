@@ -8,4 +8,4 @@ Los datos de los municipios los obtuve del sitio [México Decide](http://mexicod
 
 En [esta liga](https://github.com/segasi/analisis_mpos_consulta_naicm/blob/master/01_datos/casillas_consulta_nacim.xlsx) encontrarás la lista de municpios, y en [esta otra](https://github.com/segasi/analisis_mpos_consulta_naicm/blob/master/01_datos/mpos_consulta_nacim.xlsx) la lista con los datos de cada casilla por municipio.
 
-Puedes consultar el análisis completo en [Nexos]().
+Puedes consultar el análisis completo en [Nexos](https://www.nexos.com.mx/?p=39796).
