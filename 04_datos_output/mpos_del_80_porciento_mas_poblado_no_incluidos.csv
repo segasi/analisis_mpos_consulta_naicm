@@ -1,103 +1,103 @@
-﻿edo_nom,mpo_nom,pob_tot,mpo_incluido
-Coahuila,Ramos Arizpe,92828,No
-Nuevo León,Pesquería,87168,No
-Guanajuato,Santa Cruz de Juventino Rosas,83060,No
-Guanajuato,Comonfort,82572,No
-Coahuila,Frontera,80991,No
-Sonora,Huatabampo,80524,No
-Jalisco,Tala,80365,No
-Nuevo León,Linares,79853,No
-Guanajuato,Purísima del Rincón,79798,No
-Guanajuato,San José Iturbide,78794,No
-Jalisco,Arandas,77116,No
-Nayarit,Compostela,75520,No
-Zacatecas,Pinos,73151,No
-Baja California Sur,Comondú,72564,No
-Querétaro,Tequisquiapan,70742,No
-Jalisco,San Juan de los Lagos,69725,No
-Querétaro,Cadereyta de Montes,69549,No
-Coahuila,Múzquiz,69102,No
-Jalisco,Zapotlanejo,68519,No
-Guanajuato,Apaseo el Alto,68455,No
-Querétaro,Pedro Escobedo,68313,No
-Nuevo León,General Zuazua,67294,No
-Jalisco,La Barca,65055,No
-Tamaulipas,Valle Hermoso,64188,No
-Zacatecas,Río Grande,63880,No
-Coahuila,Sabinas,63522,No
-Chihuahua,Nuevo Casas Grandes,63412,No
-Sonora,Etchojoa,63216,No
-Guanajuato,Uriangato,62761,No
-Querétaro,Colón,62667,No
-Zacatecas,Sombrerete,62433,No
-Sonora,Puerto Peñasco,62177,No
-Querétaro,Amealco de Bonfil,61259,No
-Jalisco,Ameca,60951,No
-Nuevo León,Montemorelos,60829,No
-Jalisco,Autlán de Navarro,60572,No
-Jalisco,Atotonilco el Alto,60480,No
-Baja California Sur,Mulegé,60171,No
-Guanajuato,Romita,59879,No
-Sinaloa,Escuinapa,59436,No
-Zacatecas,Jerez,59125,No
-Guanajuato,Villagrán,58830,No
-Coahuila,Francisco I. Madero,58360,No
-Nayarit,Xalisco,57418,No
-San Luis Potosí,Mexquitic de Carmona,57184,No
-México,Calimaya,56574,No
-Sonora,Empalme,56177,No
-Chihuahua,Guadalupe y Calvo,56130,No
-Aguascalientes,Calvillo,56048,No
-Tamaulipas,San Fernando,55981,No
-Nuevo León,Salinas Victoria,54192,No
-Aguascalientes,Rincón de Romos,53866,No
-Sinaloa,Elota,53856,No
-Sinaloa,Rosario,53773,No
-Jalisco,Encarnación de Díaz,53555,No
-Zacatecas,Loreto,53441,No
-Jalisco,Ixtlahuacán de los Membrillos,53045,No
-Hidalgo,Tezontepec de Aldama,53009,No
-México,Villa de Allende,52641,No
-San Luis Potosí,Xilitla,52062,No
-Jalisco,Poncitlán,51944,No
-Chihuahua,Camargo,51572,No
-Jalisco,Chapala,50738,No
-Durango,Pueblo Nuevo,50417,No
-Guanajuato,Moroleón,50377,No
-Michoacán,Salvador Escalante,49588,No
-San Luis Potosí,Villa de Reyes,49385,No
-Guanajuato,Jerécuaro,49053,No
-México,Aculco,49026,No
-San Luis Potosí,Aquismón,48772,No
-Durango,Santiago Papasquiaro,48482,No
-Michoacán,Buenavista,47498,No
-Sinaloa,Angostura,47207,No
-México,Villa del Carbón,47151,No
-Morelos,Tepoztlán,46946,No
-Guerrero,Tecoanapa,46812,No
-Jalisco,Jocotepec,46521,No
-Aguascalientes,Pabellón de Arteaga,46473,No
-Aguascalientes,Asientos,46464,No
-Aguascalientes,San Francisco de los Romo,46454,No
-Puebla,Palmar de Bravo,46233,No
-Hidalgo,Mixquiahuala de Juárez,46224,No
-Hidalgo,Huichapan,45959,No
-Chihuahua,Guachochi,45544,No
-Michoacán,Múgica,45484,No
-San Luis Potosí,Ciudad Fernández,45385,No
-Hidalgo,Zempoala,45382,No
-Sinaloa,Mocorito,45351,No
-Zacatecas,Calera,45204,No
-Coahuila,Parras,44799,No
-Chihuahua,Meoqui,44752,No
-Hidalgo,Apan,44576,No
-Nayarit,San Blas,43979,No
-México,Hueypoxtla,43784,No
-Hidalgo,Acaxochitlán,43774,No
-Tamaulipas,González,43757,No
-Guerrero,San Luis Acatlán,43671,No
-San Luis Potosí,Ebano,43569,No
-Zacatecas,Ojocaliente,43471,No
-Coahuila,San Juan de Sabinas,43232,No
-Chihuahua,Jiménez,42860,No
-Nuevo León,Ciénega de Flores,42715,No
+﻿edo_nom,mpo_nom,pob_tot,mpo_incluido,pob_subuniverso_mpos
+Coahuila,Ramos Arizpe,92828,No,5848743
+Nuevo León,Pesquería,87168,No,5848743
+Guanajuato,Santa Cruz de Juventino Rosas,83060,No,5848743
+Guanajuato,Comonfort,82572,No,5848743
+Coahuila,Frontera,80991,No,5848743
+Sonora,Huatabampo,80524,No,5848743
+Jalisco,Tala,80365,No,5848743
+Nuevo León,Linares,79853,No,5848743
+Guanajuato,Purísima del Rincón,79798,No,5848743
+Guanajuato,San José Iturbide,78794,No,5848743
+Jalisco,Arandas,77116,No,5848743
+Nayarit,Compostela,75520,No,5848743
+Zacatecas,Pinos,73151,No,5848743
+Baja California Sur,Comondú,72564,No,5848743
+Querétaro,Tequisquiapan,70742,No,5848743
+Jalisco,San Juan de los Lagos,69725,No,5848743
+Querétaro,Cadereyta de Montes,69549,No,5848743
+Coahuila,Múzquiz,69102,No,5848743
+Jalisco,Zapotlanejo,68519,No,5848743
+Guanajuato,Apaseo el Alto,68455,No,5848743
+Querétaro,Pedro Escobedo,68313,No,5848743
+Nuevo León,General Zuazua,67294,No,5848743
+Jalisco,La Barca,65055,No,5848743
+Tamaulipas,Valle Hermoso,64188,No,5848743
+Zacatecas,Río Grande,63880,No,5848743
+Coahuila,Sabinas,63522,No,5848743
+Chihuahua,Nuevo Casas Grandes,63412,No,5848743
+Sonora,Etchojoa,63216,No,5848743
+Guanajuato,Uriangato,62761,No,5848743
+Querétaro,Colón,62667,No,5848743
+Zacatecas,Sombrerete,62433,No,5848743
+Sonora,Puerto Peñasco,62177,No,5848743
+Querétaro,Amealco de Bonfil,61259,No,5848743
+Jalisco,Ameca,60951,No,5848743
+Nuevo León,Montemorelos,60829,No,5848743
+Jalisco,Autlán de Navarro,60572,No,5848743
+Jalisco,Atotonilco el Alto,60480,No,5848743
+Baja California Sur,Mulegé,60171,No,5848743
+Guanajuato,Romita,59879,No,5848743
+Sinaloa,Escuinapa,59436,No,5848743
+Zacatecas,Jerez,59125,No,5848743
+Guanajuato,Villagrán,58830,No,5848743
+Coahuila,Francisco I. Madero,58360,No,5848743
+Nayarit,Xalisco,57418,No,5848743
+San Luis Potosí,Mexquitic de Carmona,57184,No,5848743
+México,Calimaya,56574,No,5848743
+Sonora,Empalme,56177,No,5848743
+Chihuahua,Guadalupe y Calvo,56130,No,5848743
+Aguascalientes,Calvillo,56048,No,5848743
+Tamaulipas,San Fernando,55981,No,5848743
+Nuevo León,Salinas Victoria,54192,No,5848743
+Aguascalientes,Rincón de Romos,53866,No,5848743
+Sinaloa,Elota,53856,No,5848743
+Sinaloa,Rosario,53773,No,5848743
+Jalisco,Encarnación de Díaz,53555,No,5848743
+Zacatecas,Loreto,53441,No,5848743
+Jalisco,Ixtlahuacán de los Membrillos,53045,No,5848743
+Hidalgo,Tezontepec de Aldama,53009,No,5848743
+México,Villa de Allende,52641,No,5848743
+San Luis Potosí,Xilitla,52062,No,5848743
+Jalisco,Poncitlán,51944,No,5848743
+Chihuahua,Camargo,51572,No,5848743
+Jalisco,Chapala,50738,No,5848743
+Durango,Pueblo Nuevo,50417,No,5848743
+Guanajuato,Moroleón,50377,No,5848743
+Michoacán,Salvador Escalante,49588,No,5848743
+San Luis Potosí,Villa de Reyes,49385,No,5848743
+Guanajuato,Jerécuaro,49053,No,5848743
+México,Aculco,49026,No,5848743
+San Luis Potosí,Aquismón,48772,No,5848743
+Durango,Santiago Papasquiaro,48482,No,5848743
+Michoacán,Buenavista,47498,No,5848743
+Sinaloa,Angostura,47207,No,5848743
+México,Villa del Carbón,47151,No,5848743
+Morelos,Tepoztlán,46946,No,5848743
+Guerrero,Tecoanapa,46812,No,5848743
+Jalisco,Jocotepec,46521,No,5848743
+Aguascalientes,Pabellón de Arteaga,46473,No,5848743
+Aguascalientes,Asientos,46464,No,5848743
+Aguascalientes,San Francisco de los Romo,46454,No,5848743
+Puebla,Palmar de Bravo,46233,No,5848743
+Hidalgo,Mixquiahuala de Juárez,46224,No,5848743
+Hidalgo,Huichapan,45959,No,5848743
+Chihuahua,Guachochi,45544,No,5848743
+Michoacán,Múgica,45484,No,5848743
+San Luis Potosí,Ciudad Fernández,45385,No,5848743
+Hidalgo,Zempoala,45382,No,5848743
+Sinaloa,Mocorito,45351,No,5848743
+Zacatecas,Calera,45204,No,5848743
+Coahuila,Parras,44799,No,5848743
+Chihuahua,Meoqui,44752,No,5848743
+Hidalgo,Apan,44576,No,5848743
+Nayarit,San Blas,43979,No,5848743
+México,Hueypoxtla,43784,No,5848743
+Hidalgo,Acaxochitlán,43774,No,5848743
+Tamaulipas,González,43757,No,5848743
+Guerrero,San Luis Acatlán,43671,No,5848743
+San Luis Potosí,Ebano,43569,No,5848743
+Zacatecas,Ojocaliente,43471,No,5848743
+Coahuila,San Juan de Sabinas,43232,No,5848743
+Chihuahua,Jiménez,42860,No,5848743
+Nuevo León,Ciénega de Flores,42715,No,5848743
