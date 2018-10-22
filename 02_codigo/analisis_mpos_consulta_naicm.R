@@ -457,3 +457,76 @@ bd %>%
   arrange(-num_mpos) %>% 
   mutate(num_mpos_acumulados = cumsum(num_mpos), 
          por_mpos_acumulados = round((cumsum(num_mpos)/sum(num_mpos))*100, 1))
+
+
+### Comparación del porcentaje de municipios incluidos y el porcentaje de municipios que debieron incluirse si únicamente se hubieran considerado criterios poblacionales, por estado  ----
+
+# Crear data frame con datos del % de municipios incluidos en cada estado 
+mpos_incluidos_por_edo <- 
+  bd %>% 
+  mutate(mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
+  group_by(edo_nom) %>% 
+  summarise(num_mpos = n(),
+            total_mpos_incluidos = sum(mpo_incluido == "Sí")) %>% 
+  ungroup() %>% 
+  mutate(por_mpos_incluidos = round((total_mpos_incluidos/num_mpos)*100, 1)) %>% 
+  arrange(-por_mpos_incluidos) %>% 
+  print(n = Inf)
+
+
+# Crear data frame con datos del % de municipios que debieron haberse incluido en cada estado 
+mpos_deberion_incluise_por_edo <- 
+  bd %>%
+  arrange(-pob_tot) %>% 
+  mutate(pob_acumulada = cumsum(pob_tot),
+         pob_tot_nal = sum(pob_tot),
+         por_pob_acumulada = round((pob_acumulada/pob_tot_nal)*100, 5),
+         mpo_incluido = ifelse(!is.na(municipios_nom), "Sí", "No")) %>% 
+  select(edo_nom, mpo_nom, 
+         pob_tot, 
+         pob_acumulada, 
+         pob_tot_nal, 
+         por_pob_acumulada, 
+         mpo_incluido) %>% 
+  group_by(edo_nom) %>% 
+  mutate(num_mpos = n()) %>% 
+  ungroup() %>% 
+  filter(por_pob_acumulada <=80) %>% 
+  group_by(edo_nom) %>% 
+  summarise(mpos_debieron_incluirse = n(), 
+            num_mpos = last(num_mpos)) %>% 
+  ungroup() %>% 
+  mutate(por_mpos_debieron_incluirse = round((mpos_debieron_incluirse/num_mpos)*100, 1)) %>% 
+  arrange(-por_mpos_debieron_incluirse) 
+
+# Unir data frames + limpiar/ordenar datos + generar nueva variable 
+
+bd_comparacion <- 
+  mpos_incluidos_por_edo %>% 
+  left_join(mpos_deberion_incluise_por_edo, by = "edo_nom") %>% 
+  select(-num_mpos.y) %>% 
+  rename(num_mpos = num_mpos.x) %>% 
+  mutate(diferencia_por = por_mpos_debieron_incluirse - por_mpos_incluidos)
+
+# Gráfica
+bd_comparacion %>% 
+  ggplot(aes(por_mpos_incluidos, por_mpos_debieron_incluirse)) + 
+  geom_abline(intercept = 0, slope = 1, color = "salmon", linetype = 2, size = 1.5) +
+  geom_jitter(color = "steelblue", alpha = 0.7, size = 2.5) +
+  geom_text_repel(aes(label = edo_nom), size = 5, force = 1.5) +
+  scale_x_continuous(breaks = seq(0, 100, 10)) +
+  scale_y_continuous(breaks = seq(0, 100, 10)) +
+  labs(title = str_wrap("RELACIÓN ENTRE EL PORCENTAJE DE MUNICIPIOS DE CADA ESTADO EN LOS QUE SE INSTALARÁ UNA MESA DE VOTACIÓN, Y EL PORCENTAJE QUE DEBERÍA HABERSE INCLUIDO CONSIDERANDO ÚNICAMENTE CRITERIOS POBLACIONALES", width = 70),
+       x = "\nPorcentaje de municipios incluidos",
+       y = "Porcentaje de municipios\nque debieron incluirse\n")+
+  tema
+
+ggsave(filename = "mpos_incluidos_vs_mpos_debieron_incluirse.png", path = "03_graficas/", width = 15, height = 10, dpi = 100)
+
+
+# Analizar la diferencia entre el porcentaje de municipios incluidos y el porcentaje de municipios que debieron incluirse, por estado
+
+bd_comparacion %>% 
+  select(edo_nom, por_mpos_debieron_incluirse, por_mpos_incluidos, diferencia_por) %>% 
+  arrange(diferencia_por) %>% 
+  print(n = Inf)
